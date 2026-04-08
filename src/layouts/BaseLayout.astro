@@ -32,22 +32,23 @@ const siteName = 'Mein Verein';
     <script is:inline>
       var netlifyIdentity = window.netlifyIdentity;
       if (netlifyIdentity) {
+        var hash = window.location.hash;
+        var hasToken =
+          hash.indexOf('invite_token') !== -1 ||
+          hash.indexOf('confirmation_token') !== -1 ||
+          hash.indexOf('recovery_token') !== -1;
+
         netlifyIdentity.on('init', function (user) {
+          // Widget ist jetzt bereit — erst jetzt open() aufrufen
+          if (hasToken) {
+            netlifyIdentity.open();
+          }
           if (!user) {
             netlifyIdentity.on('login', function () {
               document.location.href = '/admin/';
             });
           }
         });
-        // Token im URL-Hash → Widget sofort öffnen (invite/confirmation/recovery)
-        var hash = window.location.hash;
-        if (
-          hash.indexOf('invite_token') !== -1 ||
-          hash.indexOf('confirmation_token') !== -1 ||
-          hash.indexOf('recovery_token') !== -1
-        ) {
-          netlifyIdentity.open();
-        }
       }
     </script>
   </body>
