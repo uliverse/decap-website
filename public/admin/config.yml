@@ -1,12 +1,15 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: uliverse/decap-website
   branch: main
+  base_url: https://sveltia-cms-auth.PLACEHOLDER.workers.dev
+  # ↑ Nach Sveltia CMS Auth Deploy: workers.dev URL hier eintragen
 
-# Netlify Identity handles authentication — no GitHub OAuth app needed
-# Enable Identity + Git Gateway in your Netlify dashboard after first deploy
+site_url: https://uliverse.github.io/decap-website
+display_url: https://uliverse.github.io/decap-website
 
 media_folder: public/uploads
-public_folder: /uploads
+public_folder: /decap-website/uploads
 
 collections:
   # ── Veranstaltungen (eine Datei pro Event) ─────────────────────────────────

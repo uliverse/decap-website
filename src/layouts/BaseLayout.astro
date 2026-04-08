@@ -27,29 +27,5 @@ const siteName = 'Mein Verein';
       <slot />
     </main>
     <Footer />
-    <!-- Netlify Identity Widget — verarbeitet invite/confirmation/recovery tokens -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script is:inline>
-      var netlifyIdentity = window.netlifyIdentity;
-      if (netlifyIdentity) {
-        var hash = window.location.hash;
-        var hasToken =
-          hash.indexOf('invite_token') !== -1 ||
-          hash.indexOf('confirmation_token') !== -1 ||
-          hash.indexOf('recovery_token') !== -1;
-
-        netlifyIdentity.on('init', function (user) {
-          // Widget ist jetzt bereit — erst jetzt open() aufrufen
-          if (hasToken) {
-            netlifyIdentity.open();
-          }
-          if (!user) {
-            netlifyIdentity.on('login', function () {
-              document.location.href = '/admin/';
-            });
-          }
-        });
-      }
-    </script>
   </body>
 </html>
