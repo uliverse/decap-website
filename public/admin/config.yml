@@ -2,8 +2,7 @@ backend:
   name: github
   repo: uliverse/decap-website
   branch: main
-  base_url: https://sveltia-cms-auth.PLACEHOLDER.workers.dev
-  # ↑ Nach Sveltia CMS Auth Deploy: workers.dev URL hier eintragen
+  base_url: https://decap-website-oauth.braun-uli.workers.dev
 
 site_url: https://uliverse.github.io/decap-website
 display_url: https://uliverse.github.io/decap-website
