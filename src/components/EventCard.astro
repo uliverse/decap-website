@@ -1,0 +1,62 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  endDate?: string;
+  location?: string;
+  description?: string;
+  slug: string;
+}
+
+const { title, date, endDate, location, description, slug } = Astro.props;
+
+const dateObj = new Date(date);
+const day = dateObj.toLocaleDateString('de-DE', { day: '2-digit' });
+const month = dateObj.toLocaleDateString('de-DE', { month: 'short' });
+const year = dateObj.getFullYear();
+const time = dateObj.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+
+const endDateObj = endDate ? new Date(endDate) : null;
+const endTime = endDateObj ? endDateObj.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) : null;
+---
+
+<article
+  data-event-date={date}
+  class="group flex gap-5 p-5 rounded-2xl border border-gray-100 bg-white hover:border-brand-200 hover:shadow-md transition-all duration-200"
+>
+  <!-- Date badge -->
+  <div class="flex-shrink-0 w-14 h-16 rounded-xl bg-brand-50 flex flex-col items-center justify-center text-brand-600">
+    <span class="text-xl font-bold leading-none">{day}</span>
+    <span class="text-xs font-medium uppercase tracking-wide mt-0.5">{month}</span>
+    <span class="text-xs text-brand-400 mt-0.5">{year}</span>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 min-w-0">
+    <h3 class="font-semibold text-gray-900 group-hover:text-brand-600 transition-colors truncate">
+      {title}
+    </h3>
+
+    <div class="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500">
+      <span class="flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        {time}{endTime && ` – ${endTime}`}
+      </span>
+      {location && (
+        <span class="flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          {location}
+        </span>
+      )}
+    </div>
+
+    {description && (
+      <p class="mt-2 text-sm text-gray-600 line-clamp-2">{description}</p>
+    )}
+  </div>
+</article>

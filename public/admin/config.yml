@@ -1,0 +1,87 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Netlify Identity handles authentication — no GitHub OAuth app needed
+# Enable Identity + Git Gateway in your Netlify dashboard after first deploy
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  # ── Veranstaltungen (eine Datei pro Event) ─────────────────────────────────
+  - name: events
+    label: Veranstaltungen
+    label_singular: Veranstaltung
+    folder: src/content/events
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    sortable_fields:
+      - title
+      - date
+    fields:
+      - label: Titel
+        name: title
+        widget: string
+      - label: Datum
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DDTHH:mm:ss"
+        default: "{{now}}"
+      - label: Ende
+        name: endDate
+        widget: datetime
+        format: "YYYY-MM-DDTHH:mm:ss"
+        required: false
+      - label: Ort
+        name: location
+        widget: string
+        required: false
+      - label: Kurzbeschreibung
+        name: description
+        widget: text
+        required: false
+      - label: Bild
+        name: image
+        widget: image
+        required: false
+      - label: Entwurf
+        name: draft
+        widget: boolean
+        default: false
+      - label: Inhalt
+        name: body
+        widget: markdown
+
+  # ── Singleton-Seiten (eine Datei pro Seite) ────────────────────────────────
+  - name: pages
+    label: Seiten
+    delete: false
+    files:
+      - name: home
+        label: Startseite
+        file: src/content/pages/home.md
+        fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: Hero-Text, name: description, widget: text }
+          - { label: Inhalt, name: body, widget: markdown }
+
+      - name: about
+        label: Über uns
+        file: src/content/pages/about.md
+        fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: Untertitel, name: description, widget: text, required: false }
+          - { label: Inhalt, name: body, widget: markdown }
+
+      - name: contact
+        label: Kontakt
+        file: src/content/pages/contact.md
+        fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: Beschreibung, name: description, widget: text, required: false }
+          - { label: "E-Mail", name: email, widget: string, required: false }
+          - { label: Telefon, name: phone, widget: string, required: false }
+          - { label: Adresse, name: address, widget: text, required: false }
+          - { label: Inhalt, name: body, widget: markdown }
